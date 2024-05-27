@@ -2,9 +2,12 @@ package com.example.carroAPI.principal;
 
 import com.example.carroAPI.model.Dados;
 import com.example.carroAPI.model.Modelos;
+import com.example.carroAPI.model.Veiculo;
+import com.example.carroAPI.model.VeiculosStats;
 import com.example.carroAPI.service.ConsumoAPI;
 import com.example.carroAPI.service.ConverteDados;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
@@ -47,7 +50,7 @@ public class Principal {
         System.out.println(marcas);
 
         marcas.stream()
-                .sorted(Comparator.comparing(Dados::codigo))
+                .sorted(Comparator.comparing(Dados::nome))
                 .forEach(System.out::println);
 
         System.out.println("Informe ao código da marca para consumo: ");
@@ -72,5 +75,35 @@ public class Principal {
 
         System.out.println("\nModelos filtrados:");
         modelosFiltrados.forEach(System.out::println);
+
+        System.out.println("Digite o código do modelo escolhido:");
+        var codigoModelo = sc.nextLine();
+
+        endereco = endereco + "/" + codigoModelo + "/anos";
+        json = consumo.obterDados(endereco);
+
+        List<Dados> anos = conversor.obterLista(json, Dados.class);
+        List<Veiculo> veiculos = new ArrayList<>();
+
+        List<VeiculosStats> listaVeiculos = new ArrayList<>();
+        for (int i = 0; i < anos.size(); i++) {
+            String enderecoAnos = endereco + "/" + anos.get(i).codigo();
+            json = consumo.obterDados(enderecoAnos);
+            Veiculo veiculo = conversor.obterDados(json, Veiculo.class);
+            veiculos.add(veiculo);
+
+            VeiculosStats veiculosStats = new VeiculosStats(veiculo);
+            listaVeiculos.add(veiculosStats);
+        }
+
+        System.out.println("\nTodos os veículos filtrados com avaliações por ano:");
+        veiculos.forEach(System.out::println);
+        System.out.println("---------------------------------");
+        listaVeiculos.forEach(System.out::println);
+
+
+
+
+
     }
 }
