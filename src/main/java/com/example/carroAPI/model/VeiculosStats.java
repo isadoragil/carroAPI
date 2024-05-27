@@ -9,13 +9,18 @@ public class VeiculosStats {
 
     public VeiculosStats(Veiculo veiculo) {
         this.valor = Double.valueOf(veiculo.valor()
-                .replaceAll("R$ ", "")
-                .replaceAll(".", "")
+                .replaceAll("R\\$", "")
+                        .replaceAll(" ", " ")
+                .replaceAll("\\.", "")
                 .replaceAll(",", "."));
         this.marca = veiculo.marca();
         this.modelo = veiculo.modelo();
         this.ano = veiculo.ano();
         this.tipoCombustivel = veiculo.tipoCombustivel();
+    }
+
+    public Double getValor() {
+        return valor;
     }
 
     @Override

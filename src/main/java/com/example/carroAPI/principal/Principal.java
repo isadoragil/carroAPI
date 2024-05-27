@@ -7,10 +7,7 @@ import com.example.carroAPI.model.VeiculosStats;
 import com.example.carroAPI.service.ConsumoAPI;
 import com.example.carroAPI.service.ConverteDados;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Principal {
@@ -97,12 +94,15 @@ public class Principal {
         }
 
         System.out.println("\nTodos os veículos filtrados com avaliações por ano:");
-        veiculos.forEach(System.out::println);
-        System.out.println("---------------------------------");
+//        veiculos.forEach(System.out::println);
+//        System.out.println("---------------------------------");
         listaVeiculos.forEach(System.out::println);
+        System.out.println();
+        List<VeiculosStats> valores = listaVeiculos.stream()
+                .sorted(Comparator.comparing(VeiculosStats::getValor))
+                .collect(Collectors.toList());
 
-
-
+        valores.forEach(System.out::println);
 
 
     }
