@@ -104,6 +104,10 @@ public class Principal {
 
         valores.forEach(System.out::println);
 
+        DoubleSummaryStatistics stats = valores.stream()
+                .collect(Collectors.summarizingDouble(VeiculosStats::getValor));
+        System.out.println("Média de preço: " + String.format("R$ %.2f", stats.getAverage()));
+        System.out.println("Valor mais em conta: " + String.format("R$ %.2f", stats.getMin()));
 
     }
 }
