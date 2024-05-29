@@ -56,6 +56,7 @@ public class Principal {
         endereco = endereco + "/" + codigoMarca + "/modelos";
         json = consumo.obterDados(endereco);
 
+        System.out.println(json);
         var modeloLista = conversor.obterDados(json, Modelos.class);
 
         System.out.println("\nModelos desta marca:");
